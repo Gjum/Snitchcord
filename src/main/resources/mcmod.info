@@ -1,0 +1,12 @@
+[{
+  "modid": "snitchcord",
+  "name": "Snitchcord",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/Gjum/Snitchcord",
+  "authorList": ["Gjum"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}]
