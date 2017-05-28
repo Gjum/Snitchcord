@@ -17,6 +17,12 @@ public class WebHookSender {
     }
 
     public void pushAlert(SnitchAlert alert, SnitchcordConfig config) {
+        if (config.tracklistOn && !config.tracklist.contains(alert.playerName.toLowerCase()))
+            return;
+
+        if (config.ignorelistOn && config.ignorelist.contains(alert.playerName.toLowerCase()))
+            return;
+
         String msg = alert.playerName;
 
         if (alert.activity != SnitchAlert.Activity.ENTER) {

@@ -7,6 +7,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Set;
 
 public class SnitchcordConfig {
@@ -21,6 +22,12 @@ public class SnitchcordConfig {
     public String webhookUrl;
 
     private Property propEnabled, propSendCoords, propRoundCoords, propSendName, propWebhookUrl;
+
+    public boolean ignorelistOn;
+    public boolean tracklistOn;
+    public HashSet<String> ignorelist;
+    public HashSet<String> tracklist;
+    private Property propIgnorelistOn, propTracklistOn, propIgnorelist, propTracklist;
 
     private SnitchcordConfig() {
     }
@@ -69,6 +76,21 @@ public class SnitchcordConfig {
         propRoundCoords = config.get(CATEGORY_MAIN, "send rounded coordinates", true, "Round the snitch coordinates to the closest multiple of 10");
         propSendName = config.get(CATEGORY_MAIN, "send snitch name", true, "Send the name of the snitch");
         propWebhookUrl = config.get(CATEGORY_MAIN, "webhook url", "", "Get this from the discord channel settings");
+
+
+        propIgnorelistOn = config.get(CATEGORY_MAIN, "enable ignorelist",
+                true, "Ignore players in ignore list." +
+                        "\nThis applies to snitch/logout overlays and the proximity ping sound.");
+        propTracklistOn = config.get(CATEGORY_MAIN, "enable tracklist",
+                false, "Only show players in track list." +
+                        "\nThis applies to snitch/logout overlays and the proximity ping sound.");
+
+        propIgnorelist = config.get(CATEGORY_MAIN, "ignored players",
+                new String[]{}, "If enabled, these players will NOT show up, even if they're also in the track list" +
+                        "\nThis applies to snitch/logout overlays and the proximity ping sound.");
+        propTracklist = config.get(CATEGORY_MAIN, "tracked players",
+                new String[]{}, "If enabled, ONLY these players will show up (unless they're also in the ignore list)" +
+                        "\nThis applies to snitch/logout overlays and the proximity ping sound.");
     }
 
     /**
@@ -80,6 +102,21 @@ public class SnitchcordConfig {
         roundCoords = propRoundCoords.getBoolean();
         sendName = propSendName.getBoolean();
         webhookUrl = propWebhookUrl.getString();
+
+        ignorelistOn = propIgnorelistOn.getBoolean();
+        tracklistOn = propTracklistOn.getBoolean();
+
+        String[] ignorelistArr = propIgnorelist.getStringList();
+        ignorelist = new HashSet<>(ignorelistArr.length);
+        for (String s : ignorelistArr) {
+            ignorelist.add(s.toLowerCase());
+        }
+
+        String[] tracklistArr = propTracklist.getStringList();
+        tracklist = new HashSet<>(tracklistArr.length);
+        for (String s : tracklistArr) {
+            tracklist.add(s.toLowerCase());
+        }
 
         if (config.hasChanged()) {
             config.save();
