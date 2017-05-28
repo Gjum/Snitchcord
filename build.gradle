@@ -33,7 +33,7 @@ ext {
 group = "gjum.minecraft.forge"
 archivesBaseName = "Snitchcord-" + mcVsn
 
-version = "0.1.0"
+version = "0.1.1"
 if (!head.shortMessage.matches("[Rr]elease v\\d+.\\d+.\\d+.*")) {
     version = "${version}-pre-git-${head.abbreviatedId}+forge-$forgeVsn"
     if (System.getenv("TRAVIS_BUILD_NUMBER") != null) {
