@@ -35,6 +35,9 @@ class SendLoop implements Runnable {
             return; // jump back up to popAlertJson
         }
 
+        if (SnitchcordConfig.instance.webhookUrl == null || SnitchcordConfig.instance.webhookUrl.length() <= 0)
+            return;
+
         HttpURLConnection connection = (HttpURLConnection) new URL(SnitchcordConfig.instance.webhookUrl).openConnection();
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
