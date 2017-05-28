@@ -9,6 +9,8 @@ import net.minecraftforge.common.config.Property;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public class SnitchcordConfig {
     public static final String CATEGORY_MAIN = "Main";
@@ -20,8 +22,10 @@ public class SnitchcordConfig {
     public boolean enabled;
     public boolean sendCoords, roundCoords, sendName;
     public String webhookUrl;
-
     private Property propEnabled, propSendCoords, propRoundCoords, propSendName, propWebhookUrl;
+
+    public Pattern alertTrackFilter, alertIgnoreFilter;
+    private Property propAlertTrackFilter, propAlertIgnoreFilter;
 
     public boolean ignorelistOn;
     public boolean tracklistOn;
@@ -77,6 +81,8 @@ public class SnitchcordConfig {
         propSendName = config.get(CATEGORY_MAIN, "send snitch name", true, "Send the name of the snitch");
         propWebhookUrl = config.get(CATEGORY_MAIN, "webhook url", "", "Get this from the discord channel settings");
 
+        propAlertIgnoreFilter = config.get(CATEGORY_MAIN, "alert filter: ignore", "", "Regular expression, if an alert matches it will not be sent");
+        propAlertTrackFilter = config.get(CATEGORY_MAIN, "alert filter: track", "", "Regular expression, if it's set, only matching alerts  will be sent");
 
         propIgnorelistOn = config.get(CATEGORY_MAIN, "enable ignorelist",
                 true, "Ignore players in ignore list." +
@@ -102,6 +108,20 @@ public class SnitchcordConfig {
         roundCoords = propRoundCoords.getBoolean();
         sendName = propSendName.getBoolean();
         webhookUrl = propWebhookUrl.getString();
+
+        try {
+            alertIgnoreFilter = Pattern.compile(propAlertIgnoreFilter.getString());
+        } catch (PatternSyntaxException e) {
+            SnitchcordMod.logger.error("Error in filter for ignored alerts: " + e.getMessage());
+            alertIgnoreFilter = null;
+        }
+
+        try {
+            alertTrackFilter = Pattern.compile(propAlertTrackFilter.getString());
+        } catch (PatternSyntaxException e) {
+            SnitchcordMod.logger.error("Error in filter for tracked alerts: " + e.getMessage());
+            alertTrackFilter = null;
+        }
 
         ignorelistOn = propIgnorelistOn.getBoolean();
         tracklistOn = propTracklistOn.getBoolean();

@@ -5,6 +5,7 @@ import net.minecraft.util.math.BlockPos;
 
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
+import java.util.regex.Pattern;
 
 public class WebHookSender {
 
@@ -17,6 +18,12 @@ public class WebHookSender {
     }
 
     public void pushAlert(SnitchAlert alert, SnitchcordConfig config) {
+        if (config.alertTrackFilter != null && !alertMatchesFilter(alert, config.alertTrackFilter))
+            return;
+
+        if (config.alertIgnoreFilter != null && alertMatchesFilter(alert, config.alertIgnoreFilter))
+            return;
+
         if (config.tracklistOn && !config.tracklist.contains(alert.playerName.toLowerCase()))
             return;
 
@@ -54,6 +61,10 @@ public class WebHookSender {
 
         pushAlertJson(json);
         thread.interrupt();
+    }
+
+    private boolean alertMatchesFilter(SnitchAlert alert, Pattern alertFilter) {
+        return alertFilter.matcher(alert.rawMessage.getUnformattedText()).matches();
     }
 
     private synchronized void pushAlertJson(byte[] json) {
