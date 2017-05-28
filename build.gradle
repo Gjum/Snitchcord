@@ -1,4 +1,7 @@
+version = "0.1.2"
+
 import org.ajoberstar.grgit.Grgit
+import org.ajoberstar.grgit.exception.GrgitException
 
 import java.text.SimpleDateFormat
 
@@ -21,24 +24,31 @@ sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 ext {
-    head = Grgit.open(".").head()
-
     forgeVsn = "1.10.2-12.18.3.2254"
     if (System.getenv("FORGE_VERSION") != null) {
         forgeVsn = System.getenv("FORGE_VERSION")
     }
     mcVsn = forgeVsn.split("-", 2)[0]
+
+    try {
+        def repo = Grgit.open(".")
+        def head = repo.head()
+        isRelease = repo.tag.list().any { it.name == "v$version" && it.commit.id == head.id }
+        abbreviatedId = "git-" + head.abbreviatedId
+    } catch (GrgitException ignored) {
+        abbreviatedId = "wip"
+        isRelease = false
+    }
 }
 
 group = "gjum.minecraft.forge"
 archivesBaseName = "Snitchcord-" + mcVsn
 
-version = "0.1.1"
-if (!head.shortMessage.matches("[Rr]elease v\\d+.\\d+.\\d+.*")) {
-    version = "${version}-pre-git-${head.abbreviatedId}+forge-$forgeVsn"
-    if (System.getenv("TRAVIS_BUILD_NUMBER") != null) {
-        version = String.format("%s-build-%s", version, System.getenv("TRAVIS_BUILD_NUMBER"))
-    }
+if (!isRelease) {
+    version = "${version}-pre-${abbreviatedId}"
+}
+if (System.getenv("TRAVIS_BUILD_NUMBER") != null) {
+    version = String.format("%s+b%s", version, System.getenv("TRAVIS_BUILD_NUMBER"))
 }
 
 minecraft {
