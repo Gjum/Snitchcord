@@ -77,7 +77,7 @@ public class SnitchcordConfig {
     private void syncProperties() {
         propEnabled = config.get(CATEGORY_MAIN, "enabled", true, "Enable/disable snitch sending");
         propSendCoords = config.get(CATEGORY_MAIN, "send coordinates", true, "Send the coords (exact or rounded)");
-        propRoundCoords = config.get(CATEGORY_MAIN, "send rounded coordinates", true, "Round the snitch coordinates to the closest multiple of 10");
+        propRoundCoords = config.get(CATEGORY_MAIN, "round coordinates", true, "Round the snitch coordinates to the closest multiple of 10");
         propSendName = config.get(CATEGORY_MAIN, "send snitch name", true, "Send the name of the snitch");
         propWebhookUrl = config.get(CATEGORY_MAIN, "webhook url", "", "Get this from the discord channel settings");
 
