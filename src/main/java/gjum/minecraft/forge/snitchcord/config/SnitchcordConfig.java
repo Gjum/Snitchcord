@@ -119,7 +119,7 @@ public class SnitchcordConfig {
 
         try {
             alertTrackFilter = null;
-            if (propAlertIgnoreFilter.getString().length() > 0)
+            if (propAlertTrackFilter.getString().length() > 0)
                 alertTrackFilter = Pattern.compile(propAlertTrackFilter.getString());
         } catch (PatternSyntaxException e) {
             SnitchcordMod.logger.error("Error in filter for tracked alerts: " + e.getMessage());
