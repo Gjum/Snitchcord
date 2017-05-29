@@ -45,6 +45,12 @@ public class AlertSender {
                 (pos.getZ() + 5) / 10 * 10);
 
         Gson j = new GsonBuilder().create();
+
+        String niceWorld = alert.world;
+        if ("world".equals(niceWorld)) niceWorld = "World";
+        else if ("world_nether".equals(niceWorld)) niceWorld = "Nether";
+        else if ("world_the_end".equals(niceWorld)) niceWorld = "The End";
+
         return fmt
                 .replaceAll("<player>", j.toJson(alert.playerName))
                 .replaceAll("<snitch>", j.toJson(alert.snitchName))
@@ -56,8 +62,8 @@ public class AlertSender {
                 .replaceAll("<login>", j.toJson(alert.activity == SnitchAlert.Activity.LOGIN ? alert.activity.msg : ""))
                 .replaceAll("<logout>", j.toJson(alert.activity == SnitchAlert.Activity.LOGOUT ? alert.activity.msg : ""))
 
-                .replaceAll("<world>", j.toJson(alert.world))
-                .replaceAll("<nonWorld>", j.toJson("world".equals(alert.world) ? "" : alert.world))
+                .replaceAll("<world>", j.toJson(niceWorld))
+                .replaceAll("<nonWorld>", j.toJson("World".equals(niceWorld) ? "" : niceWorld))
 
                 .replaceAll("<coords>", String.format("%d %d %d", pos.getX(), pos.getY(), pos.getZ()))
                 .replaceAll("<x>", String.valueOf(pos.getX()))
