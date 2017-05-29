@@ -38,23 +38,8 @@ public class SnitchcordConfig {
 
     public void load(File configFile) {
         config = new Configuration(configFile, SnitchcordMod.VERSION);
-
         syncProperties();
-        final ConfigCategory categoryMain = config.getCategory(CATEGORY_MAIN);
-        final Set<String> confKeys = categoryMain.keySet();
-
         config.load();
-
-        if (!config.getDefinedConfigVersion().equals(config.getLoadedConfigVersion())) {
-            // clear config from old entries
-            // otherwise they would clutter the gui
-            final Set<String> unusedConfKeys = categoryMain.keySet();
-            unusedConfKeys.removeAll(confKeys);
-            for (String confKey : unusedConfKeys) {
-                categoryMain.remove(confKey);
-            }
-        }
-
         syncProperties();
         syncValues();
     }
