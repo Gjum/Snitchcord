@@ -110,17 +110,19 @@ public class SnitchcordConfig {
         webhookUrl = propWebhookUrl.getString();
 
         try {
-            alertIgnoreFilter = Pattern.compile(propAlertIgnoreFilter.getString());
+            alertIgnoreFilter = null;
+            if (propAlertIgnoreFilter.getString().length() > 0)
+                alertIgnoreFilter = Pattern.compile(propAlertIgnoreFilter.getString());
         } catch (PatternSyntaxException e) {
             SnitchcordMod.logger.error("Error in filter for ignored alerts: " + e.getMessage());
-            alertIgnoreFilter = null;
         }
 
         try {
-            alertTrackFilter = Pattern.compile(propAlertTrackFilter.getString());
+            alertTrackFilter = null;
+            if (propAlertIgnoreFilter.getString().length() > 0)
+                alertTrackFilter = Pattern.compile(propAlertTrackFilter.getString());
         } catch (PatternSyntaxException e) {
             SnitchcordMod.logger.error("Error in filter for tracked alerts: " + e.getMessage());
-            alertTrackFilter = null;
         }
 
         ignorelistOn = propIgnorelistOn.getBoolean();
