@@ -27,6 +27,8 @@ public class SnitchcordMod {
 
     public static Logger logger;
     private long lastCrash = 0;
+
+    private WebHookLoop webHookLoop;
     private AlertSender alertSender;
 
     @Mod.EventHandler
@@ -43,7 +45,8 @@ public class SnitchcordMod {
 
         MinecraftForge.EVENT_BUS.register(this);
         new KeyHandler();
-        alertSender = new AlertSender();
+        webHookLoop = new WebHookLoop();
+        alertSender = new AlertSender(webHookLoop);
     }
 
     @SubscribeEvent

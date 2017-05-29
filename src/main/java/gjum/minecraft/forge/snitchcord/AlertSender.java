@@ -11,8 +11,8 @@ public class AlertSender {
 
     private final WebHookLoop sender;
 
-    public AlertSender() {
-        sender = new WebHookLoop();
+    public AlertSender(WebHookLoop sender) {
+        this.sender = sender;
     }
 
     public void pushAlert(SnitchAlert alert, SnitchcordConfig config) {
@@ -30,7 +30,7 @@ public class AlertSender {
 
         final String json = formatAlert(alert, config.alertFormat);
 
-        sender.pushAlertJson(json);
+        sender.pushJson(json);
     }
 
     private boolean alertMatchesFilter(SnitchAlert alert, Pattern alertFilter) {

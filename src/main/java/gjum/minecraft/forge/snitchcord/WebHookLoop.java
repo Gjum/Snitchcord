@@ -23,7 +23,7 @@ class WebHookLoop extends Thread {
         }
     }
 
-    public synchronized void pushAlertJson(String json) {
+    public synchronized void pushJson(String json) {
         alertQueue.add(json.getBytes(StandardCharsets.UTF_8));
         interrupt();
     }
