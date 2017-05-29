@@ -20,9 +20,9 @@ public class SnitchcordConfig {
     public Configuration config;
 
     public boolean enabled;
-    public boolean sendCoords, roundCoords, sendName;
     public String webhookUrl;
-    private Property propEnabled, propSendCoords, propRoundCoords, propSendName, propWebhookUrl;
+    public String alertFormat;
+    private Property propEnabled, propWebhookUrl, propAlertFormat;
 
     public Pattern alertTrackFilter, alertIgnoreFilter;
     private Property propAlertTrackFilter, propAlertIgnoreFilter;
@@ -61,9 +61,7 @@ public class SnitchcordConfig {
      */
     private void syncProperties() {
         propEnabled = config.get(CATEGORY_MAIN, "enabled", true, "Enable/disable snitch sending");
-        propSendCoords = config.get(CATEGORY_MAIN, "send coordinates", true, "Send the coords (exact or rounded)");
-        propRoundCoords = config.get(CATEGORY_MAIN, "round coordinates", true, "Round the snitch coordinates to the closest multiple of 10");
-        propSendName = config.get(CATEGORY_MAIN, "send snitch name", true, "Send the name of the snitch");
+        propAlertFormat = config.get(CATEGORY_MAIN, "alert format", "{\"content\":\"**<player>** <nonEnter> at <snitch> <nonWorld> ~[<roundedCoords>]\"}", "");
         propWebhookUrl = config.get(CATEGORY_MAIN, "webhook url", "", "Get this from the discord channel settings");
 
         propAlertIgnoreFilter = config.get(CATEGORY_MAIN, "alert filter: ignore", "", "Regular expression, if an alert matches it will not be sent");
@@ -89,9 +87,7 @@ public class SnitchcordConfig {
      */
     private void syncValues() {
         enabled = propEnabled.getBoolean();
-        sendCoords = propSendCoords.getBoolean();
-        roundCoords = propRoundCoords.getBoolean();
-        sendName = propSendName.getBoolean();
+        alertFormat = propAlertFormat.getString();
         webhookUrl = propWebhookUrl.getString();
 
         try {
