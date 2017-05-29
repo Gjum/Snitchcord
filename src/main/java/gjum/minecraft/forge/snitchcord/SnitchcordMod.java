@@ -27,7 +27,7 @@ public class SnitchcordMod {
 
     public static Logger logger;
     private long lastCrash = 0;
-    private WebHookSender webHookSender;
+    private AlertSender alertSender;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -43,16 +43,18 @@ public class SnitchcordMod {
 
         MinecraftForge.EVENT_BUS.register(this);
         new KeyHandler();
-        webHookSender = new WebHookSender();
+        alertSender = new AlertSender();
     }
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
         try {
             if (!SnitchcordConfig.instance.enabled) return;
+
             SnitchAlert alert = SnitchAlert.fromChat(event.getMessage());
-            if (alert == null) return;
-            webHookSender.pushAlert(alert, SnitchcordConfig.instance);
+            if (alert != null) {
+                alertSender.pushAlert(alert, SnitchcordConfig.instance);
+            }
         } catch (Exception e) {
             if (lastCrash < System.currentTimeMillis() - 5000) {
                 lastCrash = System.currentTimeMillis();

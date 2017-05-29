@@ -4,18 +4,14 @@ import com.google.gson.GsonBuilder;
 import gjum.minecraft.forge.snitchcord.config.SnitchcordConfig;
 import net.minecraft.util.math.BlockPos;
 
-import java.nio.charset.StandardCharsets;
-import java.util.LinkedList;
 import java.util.regex.Pattern;
 
-public class WebHookSender {
+public class AlertSender {
 
-    private final Thread thread;
-    private final LinkedList<byte[]> alertQueue = new LinkedList<>();
+    private final WebHookLoop sender;
 
-    public WebHookSender() {
-        thread = new Thread(new SendLoop(this));
-        thread.start();
+    public AlertSender() {
+        sender = new WebHookLoop();
     }
 
     public void pushAlert(SnitchAlert alert, SnitchcordConfig config) {
@@ -60,20 +56,10 @@ public class WebHookSender {
                 + "}"
         );
 
-        pushAlertJson(json.getBytes(StandardCharsets.UTF_8));
-        thread.interrupt();
+        sender.pushAlertJson(json);
     }
 
     private boolean alertMatchesFilter(SnitchAlert alert, Pattern alertFilter) {
         return alertFilter.matcher(alert.rawMessage.getUnformattedText()).matches();
     }
-
-    private synchronized void pushAlertJson(byte[] json) {
-        alertQueue.add(json);
-    }
-
-    public synchronized byte[] popAlertJson() {
-        return alertQueue.poll();
-    }
-
 }

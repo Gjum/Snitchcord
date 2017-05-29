@@ -6,13 +6,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
 
-class SendLoop implements Runnable {
-    private WebHookSender webHookSender;
-
-    public SendLoop(WebHookSender webHookSender) {
-        this.webHookSender = webHookSender;
-    }
+class WebHookLoop extends Thread {
+    private final LinkedList<byte[]> alertQueue = new LinkedList<>();
 
     @Override
     public void run() {
@@ -25,8 +23,17 @@ class SendLoop implements Runnable {
         }
     }
 
+    public synchronized void pushAlertJson(String json) {
+        alertQueue.add(json.getBytes(StandardCharsets.UTF_8));
+        interrupt();
+    }
+
+    private synchronized byte[] popAlertJson() {
+        return alertQueue.poll();
+    }
+
     private void runLoop() throws IOException {
-        byte[] json = webHookSender.popAlertJson();
+        byte[] json = popAlertJson();
         if (json == null) {
             try {
                 Thread.sleep(10000);
