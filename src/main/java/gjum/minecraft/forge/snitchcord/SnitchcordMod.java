@@ -46,6 +46,7 @@ public class SnitchcordMod {
         MinecraftForge.EVENT_BUS.register(this);
         new KeyHandler();
         webHookLoop = new WebHookLoop();
+        webHookLoop.run();
         alertSender = new AlertSender(webHookLoop);
     }
 

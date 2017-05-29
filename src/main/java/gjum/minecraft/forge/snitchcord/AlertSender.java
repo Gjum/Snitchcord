@@ -52,18 +52,18 @@ public class AlertSender {
         else if ("world_the_end".equals(niceWorld)) niceWorld = "The End";
 
         return fmt
-                .replaceAll("<player>", j.toJson(alert.playerName))
-                .replaceAll("<snitch>", j.toJson(alert.snitchName))
+                .replaceAll("<player>", j.toJson(alert.playerName).replaceAll("^\"|\"$", ""))
+                .replaceAll("<snitch>", j.toJson(alert.snitchName).replaceAll("^\"|\"$", ""))
 
-                .replaceAll("<longAction>", j.toJson(alert.activityText))
-                .replaceAll("<shortAction>", j.toJson(alert.activity.msg))
-                .replaceAll("<nonEnter>", j.toJson(alert.activity != SnitchAlert.Activity.ENTER ? alert.activity.msg : ""))
-                .replaceAll("<enter>", j.toJson(alert.activity == SnitchAlert.Activity.ENTER ? alert.activity.msg : ""))
-                .replaceAll("<login>", j.toJson(alert.activity == SnitchAlert.Activity.LOGIN ? alert.activity.msg : ""))
-                .replaceAll("<logout>", j.toJson(alert.activity == SnitchAlert.Activity.LOGOUT ? alert.activity.msg : ""))
+                .replaceAll("<longAction>", alert.activityText)
+                .replaceAll("<shortAction>", alert.activity.msg)
+                .replaceAll("<nonEnter>", alert.activity != SnitchAlert.Activity.ENTER ? alert.activity.msg : "")
+                .replaceAll("<enter>", alert.activity == SnitchAlert.Activity.ENTER ? alert.activity.msg : "")
+                .replaceAll("<login>", alert.activity == SnitchAlert.Activity.LOGIN ? alert.activity.msg : "")
+                .replaceAll("<logout>", alert.activity == SnitchAlert.Activity.LOGOUT ? alert.activity.msg : "")
 
-                .replaceAll("<world>", j.toJson(niceWorld))
-                .replaceAll("<nonWorld>", j.toJson("World".equals(niceWorld) ? "" : niceWorld))
+                .replaceAll("<world>", niceWorld)
+                .replaceAll("<nonWorld>", "World".equals(niceWorld) ? "" : niceWorld)
 
                 .replaceAll("<coords>", String.format("%d %d %d", pos.getX(), pos.getY(), pos.getZ()))
                 .replaceAll("<x>", String.valueOf(pos.getX()))
