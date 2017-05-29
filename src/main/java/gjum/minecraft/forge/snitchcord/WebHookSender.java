@@ -1,5 +1,6 @@
 package gjum.minecraft.forge.snitchcord;
 
+import com.google.gson.GsonBuilder;
 import gjum.minecraft.forge.snitchcord.config.SnitchcordConfig;
 import net.minecraft.util.math.BlockPos;
 
@@ -54,12 +55,12 @@ public class WebHookSender {
             msg += " " + alert.snitchName;
         }
 
-        final byte[] json = ("{\"content\":\""
-                + msg
-                + "\"}"
-        ).getBytes(StandardCharsets.UTF_8);
+        final String json = ("{\"content\":"
+                + new GsonBuilder().create().toJson(msg)
+                + "}"
+        );
 
-        pushAlertJson(json);
+        pushAlertJson(json.getBytes(StandardCharsets.UTF_8));
         thread.interrupt();
     }
 
