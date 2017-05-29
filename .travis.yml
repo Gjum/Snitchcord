@@ -9,7 +9,7 @@ script:
 branches:
   only:
   - master
-  - /v\d+\..*/
+  - "/v\\d+\\..*/"
 before_cache:
 - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -rf $HOME/.gradle/caches/*/fileHashes/
@@ -21,7 +21,7 @@ cache:
 deploy:
   provider: releases
   api_key:
-    secure: l0Wr7lxCpd6nEEj1YNvpPXXYOwTzLWq94DagD8/5IHnZmeFnuf8g7NNmMtF5MHD3JLkeoh62tDb5WPh4eH50HTLM2hRzX+d7G8I8D8450eiu1ILVqhNsw1zrwVNRzRwzEmxCzeZXm/Y9FbK6TmicCgA8jEVb075k1hHOzMKsLTjEYz4ZRtFKWozAcwmliVsG1ORQzULnpOEkfeNC0zkSMpZnFghoyZGmcQhS1OZZ0wG9KSteGCSNpXoGK+ptrfcmv/jDQyg/IGHZb3n2tsnhHKUOG9T8+qmYnlWPQzXFlQmZS1AaplfJ7zA8sf3xsgMCB8jTeiTyUbNv+YazFKcDeBTN00emE3QDVwg0+7dFA92ongFc4ShdQEtjoWffcTnbU6OlVCbJvs7sQUKqT9fRLeOdKt1n8h3OXqS+8DPyG+UVRTCeadNfOBngUBLb9cWMCd0BjI0EwDzdwXgG6C9bfh4RExVyWOtW1aakxUUGVaoozqQWoAsJIw6WsLhQ8p5KvurNCBmyUMsHa1wSAqSnyW9VwTfPe0Y9RiU4kT09JfOvSLTbGKzj4b+QR8rnEGfwLTYvWPuNsmw56p2uq/yruoQfdMN/IKSwzTU2eDfp2rx4VBScZAzdy4upuaCWaB+lIBd9ce8Ln501b6XZihNScE7EZwB2t/eg3y/5HJ/3kPo=
+    secure: HzLDNgiMso+aZ7NLV1xNV5QpvB/r2ontFwLVXqqw/kWiRLlFaK2oO8xmTq2AkUfQJPBnuJfhhdkj+96mFeBZDQ482m+zyG0n9qAzjoLwi8M+HzfvKvLw8JzQbdbj0Hugp/vAeMSY0yuMFDuCgpfvv3U3HtNzPCX+mtZx7w6QEh5hc4iDJgE8SljzBVvuPvCDATgfCEKJJsbAdqxFBIGklGw0f62DfSjkJEAc2QVVbTYnAJGbScfghiiCPrdgwT8TyMMwtjcnSTI355m9BNkpU1A5pWvLrLldJE1j6N2EFG8qlARYs9ySt1siJO+Rm3G5SuZzOa4sPsDXwqssCgs2cG3aaPx2LxegmjrpscuSnAqrpzl1erncBNM/smN15REJreiCoGU15FiYFYSFfeyPdqd1MbyHLY+0QS5JbFTZdC64ocVJFdyK/9mNceD8GmbpzCLcWUXsVBvtK7O0mTNp1LrOg8kdJPDkI20eYGzaCSLaIrvdsk1N7gOOkqFZd1b1Zkj/+nFjuimT5cm2fGI9Iv3XMFbm9c/SbbZpUHe9+DLjl7NpuZLCKlcny+fUd6DpTsQHbOLe4F+MFJxgeKiKlrMGU4VmwPcmeBaRLlcxDdXIudjWE4sddzLKZ0F62M9gysbo+G4BcQt5fREIqR2Pif/PzZ8fYRjgZWiySCW3kg4=
   skip_cleanup: true
   file: build/libs/*.jar
   file_glob: true
