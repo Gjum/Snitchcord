@@ -2,16 +2,14 @@ package gjum.minecraft.forge.snitchcord.config;
 
 
 import gjum.minecraft.forge.snitchcord.SnitchcordMod;
-import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.io.File;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -64,7 +62,7 @@ public class SnitchcordConfig {
      */
     private void syncProperties() {
         propEnabled = config.get(CATEGORY_MAIN, "enabled", true, "Enable/disable snitch sending");
-        propAlertFormat = config.get(CATEGORY_MAIN, "alert format", "{\"content\":\"**<player>** <nonEnter> at <snitch> <nonWorld> ~[<roundedCoords>]\"}", "");
+        propAlertFormat = config.get(CATEGORY_MAIN, "alert format", "{\"content\":\"<time> **<player>** <nonEnter> at <snitch> <nonWorld> ~[<roundedCoords>]\"}", "");
         propWebhookUrl = config.get(CATEGORY_MAIN, "webhook url", "", "Get this from the discord channel settings");
 
         propAlertIgnoreFilter = config.get(CATEGORY_MAIN, "alert filter: ignore", "", "Regular expression, if an alert matches it will not be sent");

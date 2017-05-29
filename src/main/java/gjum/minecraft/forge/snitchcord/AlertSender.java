@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import gjum.minecraft.forge.snitchcord.config.SnitchcordConfig;
 import net.minecraft.util.math.BlockPos;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class AlertSender {
@@ -52,6 +54,7 @@ public class AlertSender {
         else if ("world_the_end".equals(niceWorld)) niceWorld = "The End";
 
         return fmt
+                .replaceAll("<time>", new SimpleDateFormat("HH:mm:ss").format(new Date()))
                 .replaceAll("<player>", j.toJson(alert.playerName).replaceAll("^\"|\"$", ""))
                 .replaceAll("<snitch>", j.toJson(alert.snitchName).replaceAll("^\"|\"$", ""))
 
