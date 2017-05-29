@@ -6,8 +6,11 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.io.File;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -80,6 +83,13 @@ public class SnitchcordConfig {
         propTracklist = config.get(CATEGORY_MAIN, "tracked players",
                 new String[]{}, "If enabled, ONLY these players will show up (unless they're also in the ignore list)" +
                         "\nThis applies to snitch/logout overlays and the proximity ping sound.");
+
+        List<String> menuItems = new ArrayList<>(Arrays.asList("webhook url", "enabled",
+                "alert format",
+                "alert filter: track", "alert filter: ignore",
+                "enable tracklist", "tracked players",
+                "enable ignorelist", "ignored players"));
+        config.setCategoryPropertyOrder(CATEGORY_MAIN, menuItems);
     }
 
     /**
