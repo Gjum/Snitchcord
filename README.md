@@ -16,6 +16,8 @@ Send Snitch alerts to Discord using Webhooks
 1. paste the webhook url, change other options if you like
 1. click `Done` so your changes are saved (don't hit Escape)
 
+![config options screenshot of v2.0.0](https://i.imgur.com/drkWf2k.jpg)
+
 ### Alert Formatting
 
 The `{"content":"..."}` is necessary to tell Discord this is a text message.
