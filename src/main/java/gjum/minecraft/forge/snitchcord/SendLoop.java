@@ -36,6 +36,7 @@ class SendLoop implements Runnable {
         }
 
         HttpURLConnection connection = (HttpURLConnection) new URL(SnitchcordConfig.instance.webhookUrl).openConnection();
+        connection.setDoOutput(true);
         connection.setRequestMethod("POST");
         connection.addRequestProperty("User-Agent", "Mozilla/4.76");
         connection.setRequestProperty("Content-Length", String.valueOf(json.length));
