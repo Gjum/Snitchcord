@@ -212,13 +212,13 @@ public class AlertSender {
                     parsedFmt.append(alert.activity != SnitchAlert.Activity.ENTER ? token.contentPrefix + alert.activity.msg + token.contentPostfix : "");
                     break;
                 case "enter":
-                    parsedFmt.append(alert.activity == SnitchAlert.Activity.ENTER ? alert.activity.msg : "");
+                    parsedFmt.append(alert.activity == SnitchAlert.Activity.ENTER ? token.contentPrefix + alert.activity.msg + token.contentPostfix : "");
                     break;
                 case "login":
-                    parsedFmt.append(alert.activity == SnitchAlert.Activity.LOGIN ? alert.activity.msg : "");
+                    parsedFmt.append(alert.activity == SnitchAlert.Activity.LOGIN ? token.contentPrefix + alert.activity.msg + token.contentPostfix : "");
                     break;
                 case "logout":
-                    parsedFmt.append(alert.activity == SnitchAlert.Activity.LOGOUT ? alert.activity.msg : "");
+                    parsedFmt.append(alert.activity == SnitchAlert.Activity.LOGOUT ? token.contentPrefix + alert.activity.msg + token.contentPostfix : "");
                     break;
 
                 case "world":
