@@ -47,7 +47,21 @@ All the `<...>` will be replaced by various alert information:
 | \<ry\>            | 60                         |
 | \<rz\>            | -790                       |
 
-Duplicate spaces are removed, and standard world names are replaced with their friendlier variants (see table).
+Standard world names are replaced with their friendlier variants (see table).
+
+You can put colons around optional format keys (`nonEnter`, `nonWorld`) that you'd like to be formatted only when they are shown.
+
+For example, upon a snitch entry event, the output for the alert format
+
+`{"content":"<player> **<nonEnter>** at <snitch>"}`
+
+would be `PLAYER ** at SNITCHNAME`, which probably isn't what you want.
+
+Instead, you can do
+
+`{"content":"<player> <**:nonEnter:**> at <snitch>"}`
+
+which would result in `PLAYER at SNITCHNAME`.
 
 [![Travis build Status](https://travis-ci.org/Gjum/Snitchcord.svg?branch=master)](https://travis-ci.org/Gjum/Snitchcord)
 
