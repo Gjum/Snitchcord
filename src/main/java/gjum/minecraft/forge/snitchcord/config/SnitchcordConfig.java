@@ -62,7 +62,7 @@ public class SnitchcordConfig {
      */
     private void syncProperties() {
         propEnabled = config.get(CATEGORY_MAIN, "enabled", true, "Enable/disable snitch sending");
-        propAlertFormat = config.get(CATEGORY_MAIN, "alert format", "{\"content\":\"<time> **<player>** <nonEnter> at <snitch> <nonWorld> ~[<roundedCoords>]\"}", "");
+        propAlertFormat = config.get(CATEGORY_MAIN, "alert format", "{\"content\":\"<time> **<player>**< :nonEnter:> at <snitch>< :nonWorld:> ~[<roundedCoords>]\"}", "");
         propWebhookUrl = config.get(CATEGORY_MAIN, "webhook url", "", "Get this from the discord channel settings");
 
         propAlertIgnoreFilter = config.get(CATEGORY_MAIN, "alert filter: ignore", "", "Regular expression, if an alert matches it will not be sent");
