@@ -66,6 +66,24 @@ public class AlertSender {
         StringBuilder fmtKey = new StringBuilder();
         for (String ch : fmt.split("")) {
             FmtTemplateToken token = new FmtTemplateToken();
+            if (
+                    (!ch.equals(">") && seenClosingChar) ||
+                    (ch.equals(">") && !seenClosingChar)) {
+                inFmtKey = false;
+                token.type = "FMTKEY";
+                token.content = fmtKey.toString();
+                basicTokens.add(token);
+                fmtKey.setLength(0);
+                if (!ch.equals(">")) {
+                    token = new FmtTemplateToken();
+                    token.type = "TEXT";
+                    token.content = ch;
+                    basicTokens.add(token);
+                }
+                seenOpeningChar = false;
+                seenClosingChar = false;
+                continue;
+            }
             if (ch.equals("<")) {
                 if (seenOpeningChar) {
                     token.type = "TEXT";
@@ -87,24 +105,12 @@ public class AlertSender {
                     seenClosingChar = true;
                 }
             } else {
-                if (seenClosingChar) {
-                    inFmtKey = false;
-                    token.type = "FMTKEY";
-                    token.content = fmtKey.toString();
-                    basicTokens.add(token);
-                    fmtKey.setLength(0);
-                    token = new FmtTemplateToken();
+                if (inFmtKey) {
+                    fmtKey.append(ch);
+                } else {
                     token.type = "TEXT";
                     token.content = ch;
                     basicTokens.add(token);
-                } else {
-                    if (inFmtKey) {
-                        fmtKey.append(ch);
-                    } else {
-                        token.type = "TEXT";
-                        token.content = ch;
-                        basicTokens.add(token);
-                    }
                 }
                 seenOpeningChar = false;
                 seenClosingChar = false;
