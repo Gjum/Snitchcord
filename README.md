@@ -4,17 +4,17 @@ Send Snitch alerts to Discord using Webhooks
 
 ### How to Use
 
-1. install the [latest `.jar`](https://github.com/Gjum/Snitchcord/releases) (uses Forge)
-1. create a webhook in the config screen of one of your Discord channels (or ask an admin to create a webhook url for you)
-    - click the gear next to the channel name
-    - select `Webhooks` on the left
-    - click `Create Webhook`
-    - copy the `Webhook Url` at the bottom
-1. open the config screen:
-    - from the start screen: `Mods`, select Snitchcord on the left, then click `Config` at the bottom left
-    - from the escape menu: `Mods config`, select Snitchcord on the left, then click `Config` at the bottom left
-1. paste the webhook url, change other options if you like
-1. click `Done` so your changes are saved (don't hit Escape)
+1. Install the [latest `.jar`](https://github.com/Gjum/Snitchcord/releases) (uses Forge)
+1. Create a webhook in the config screen of one of your Discord channels (or ask an admin to create a webhook url for you)
+    - Click the gear next to the channel name
+    - Select `Webhooks` on the left
+    - Click `Create Webhook`
+    - Copy the `Webhook Url` at the bottom
+1. Open the config screen:
+    - From the start screen: `Mods`, select Snitchcord on the left, then click `Config` at the bottom left
+    - From the Escape menu: `Mods config`, select Snitchcord on the left, then click `Config` at the bottom left
+1. Paste the webhook url, change other options if you like
+1. Click `Done` so your changes are saved (don't hit Escape)
 
 ![config options screenshot of v2.0.0](https://i.imgur.com/drkWf2k.jpg)
 
@@ -49,9 +49,9 @@ All the `<...>` will be replaced by various alert information:
 
 Standard world names are replaced with their friendlier variants (see table).
 
-You can put colons around optional format keys (`nonEnter`, `nonWorld`) that you'd like to be formatted only when they are shown.
+You can put colons around optional format keys (`nonEnter`, `nonWorld`, etc.) that you'd like to be formatted only when they are shown.
 
-For example, upon a snitch entry event, the output for the alert format
+For example, upon a snitch entry event, the output for alert format
 
 `{"content":"<player> **<nonEnter>** at <snitch>"}`
 
