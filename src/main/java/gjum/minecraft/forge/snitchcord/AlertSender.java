@@ -205,7 +205,7 @@ public class AlertSender {
                     parsedFmt.append(j.toJson(alert.playerName).replaceAll("^\"|\"$", ""));
                     break;
                 case "snitch":
-                    parsedFmt.append(j.toJson(alert.snitchName).replaceAll("^\"|\"$", "").replaceAll("\\\\", "\\\\\\\\"));
+                    parsedFmt.append(j.toJson(alert.snitchName).replaceAll("^\"|\"$", ""));
                     break;
 
                 case "longAction":
