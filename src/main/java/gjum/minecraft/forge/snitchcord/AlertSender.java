@@ -8,6 +8,8 @@ import gjum.minecraft.forge.snitchcord.FmtTemplateToken;
 import net.minecraft.util.math.BlockPos;
 
 import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.util.TimeZone;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -191,6 +193,8 @@ public class AlertSender {
         else if ("world_nether".equals(niceWorld)) niceWorld = "Nether";
         else if ("world_the_end".equals(niceWorld)) niceWorld = "The End";
 
+        String dateFormat = "HH:mm:ss";
+
         StringBuilder parsedFmt = new StringBuilder();
         for (FmtTemplateToken token : tokens) {
             if (token.type.equals("TEXT")) {
@@ -199,7 +203,12 @@ public class AlertSender {
             }
             switch (token.content) {
                 case "time":
-                    parsedFmt.append(new SimpleDateFormat("HH:mm:ss").format(new Date()));
+                    parsedFmt.append(new SimpleDateFormat(dateFormat).format(new Date()));
+                    break;
+                case "timeUTC":
+                    DateFormat df = new SimpleDateFormat(dateFormat);
+                    df.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    parsedFmt.append(df.format(new Date()));
                     break;
                 case "player":
                     parsedFmt.append(j.toJson(alert.playerName).replaceAll("^\"|\"$", ""));
