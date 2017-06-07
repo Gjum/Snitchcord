@@ -10,7 +10,7 @@ public class SnitchAlert {
     public static final Pattern snitchAlertPattern = Pattern.compile("\\s*\\*\\s*([^\\s]*)\\s\\b(entered snitch at|logged out in snitch at|logged in to snitch at)\\b\\s*([^\\s]*)\\s\\[([^\\s]*)\\s([-\\d]*)\\s([-\\d]*)\\s([-\\d]*)\\]");
 
     public enum Activity {
-        ENTER("enter"), LOGIN("login"), LOGOUT("logout"), UNKNOWN("UNKNOWN");
+        ENTER("Enter"), LOGIN("Login"), LOGOUT("Logout"), UNKNOWN("UNKNOWN");
 
         public final String msg;
 
