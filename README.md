@@ -28,6 +28,8 @@ All the `<...>` will be replaced by various alert information:
 
 | format key        | replacement examples       |
 |:------------------|:---------------------------|
+| \<time\>          | 05:23                      |
+| \<timeUTC\>       | 00:23                      |
 | \<player\>        | Gjum                       |
 | \<snitch\>        | MySnitch                   |
 | \<longAction\>    | entered snitch at \| ...   |
