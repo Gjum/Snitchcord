@@ -32,6 +32,7 @@ All the `<...>` will be replaced by various alert information:
 | \<timeUTC\>       | 00:23                      |           |
 | \<player\>        | Gjum                       |           |
 | \<snitch\>        | MySnitch                   |     ✔    |
+| \<group\>         | MyGroup                    |     ✔    |
 | \<longAction\>    | entered snitch at \| ...   |           |
 | \<shortAction\>   | Enter \| Login \| Logout   |           |
 | \<nonEnter\>      | Login \| Logout            |     ✔    |
@@ -48,6 +49,11 @@ All the `<...>` will be replaced by various alert information:
 | \<rx\>            | -1230                      |           |
 | \<ry\>            | 60                         |           |
 | \<rz\>            | -790                       |           |
+| \<type\>          | Entry \| Logging           |     ✔    |
+| \<shortType\>     | E \| L                     |     ✔    |
+| \<nonEntry\>      | Logging                    |     ✔    |
+| \<shortNonEntry\> | L                          |     ✔    |
+
 
 Standard world names are replaced with their friendlier variants (see table).
 
