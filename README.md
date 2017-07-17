@@ -1,6 +1,6 @@
-Snitchcord
-----------
-Send Snitch alerts to Discord using Webhooks
+## Snitchcord
+
+Sends Snitch alerts to a Discord channel
 
 ### How to Use
 
@@ -26,7 +26,7 @@ You can change it to something else if you know the format.
 
 All the `<...>` will be replaced by various alert information:
 
-| format key        | replacement examples       | optional? |
+| Format key        | Replacement examples       | Optional? |
 |:------------------|:---------------------------|:----------|
 | \<time\>          | 05:23                      |           |
 | \<timeUTC\>       | 00:23                      |           |
@@ -54,8 +54,9 @@ All the `<...>` will be replaced by various alert information:
 | \<nonEntry\>      | Logging                    |     ✔    |
 | \<shortNonEntry\> | L                          |     ✔    |
 
-
 Standard world names are replaced with their friendlier variants (see table).
+
+#### Optionals
 
 You can put colons around optional format keys (`nonEnter`, `nonWorld`, etc.) that you'd like to be formatted only when they are shown.
 
