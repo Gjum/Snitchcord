@@ -36,6 +36,12 @@ public class AlertSender {
         if (config.ignorelistOn && config.ignorelist.contains(alert.playerName.toLowerCase()))
             return;
 
+        if (alert.group != null && config.trackedGroupsOn && !config.trackedGroups.contains(alert.group.toLowerCase()))
+            return;
+
+        if (alert.group != null && config.ignoredGroupsOn && config.ignoredGroups.contains(alert.group.toLowerCase()))
+            return;
+
         final String json;
         try {
             json = formatAlert(alert, config.alertFormat);
@@ -215,6 +221,9 @@ public class AlertSender {
                     break;
                 case "snitch":
                     parsedFmt.append(alert.snitchName.trim().isEmpty() ? "" : token.contentPrefix + j.toJson(alert.snitchName).replaceAll("^\"|\"$", "") + token.contentPostfix);
+                    break;
+                case "group":
+                    parsedFmt.append(alert.group == null ? "" : token.contentPrefix + alert.group + token.contentPostfix);
                     break;
 
                 case "longAction":

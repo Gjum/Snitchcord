@@ -34,6 +34,12 @@ public class SnitchcordConfig {
     public HashSet<String> tracklist;
     private Property propIgnorelistOn, propTracklistOn, propIgnorelist, propTracklist;
 
+    public boolean ignoredGroupsOn;
+    public boolean trackedGroupsOn;
+    public HashSet<String> ignoredGroups;
+    public HashSet<String> trackedGroups;
+    private Property propignoredGroupsOn, proptrackedGroupsOn, propignoredGroups, proptrackedGroups;
+
     private SnitchcordConfig() {
     }
 
@@ -74,7 +80,6 @@ public class SnitchcordConfig {
         propTracklistOn = config.get(CATEGORY_MAIN, "enable tracklist",
                 false, "Only show players in track list." +
                         "\nThis applies to snitch/logout overlays and the proximity ping sound.");
-
         propIgnorelist = config.get(CATEGORY_MAIN, "ignored players",
                 new String[]{}, "If enabled, these players will NOT show up, even if they're also in the track list" +
                         "\nThis applies to snitch/logout overlays and the proximity ping sound.");
@@ -82,9 +87,18 @@ public class SnitchcordConfig {
                 new String[]{}, "If enabled, ONLY these players will show up (unless they're also in the ignore list)" +
                         "\nThis applies to snitch/logout overlays and the proximity ping sound.");
 
+        propignoredGroupsOn = config.get(CATEGORY_MAIN, "enable ignored groups", false, "Ignore snitches on listed groups.");
+        proptrackedGroupsOn = config.get(CATEGORY_MAIN, "enable tracked groups", false, "Only show snitches on listed groups");
+        propignoredGroups = config.get(CATEGORY_MAIN, "ignored groups",
+                new String[]{}, "If enabled, snitches on these groups will NOT show up, even if they're also in the ignored groups list.");
+        proptrackedGroups = config.get(CATEGORY_MAIN, "tracked groups",
+                new String[]{}, "If enabled, ONLY snitches on these groups will show up (unless they're also in the ignored groups list).");
+
         List<String> menuItems = new ArrayList<>(Arrays.asList("webhook url", "enabled",
                 "alert format",
                 "alert filter: track", "alert filter: ignore",
+                "enable tracked groups", "tracked groups",
+                "enable ignored groups", "ignored groups",
                 "enable tracklist", "tracked players",
                 "enable ignorelist", "ignored players"));
         config.setCategoryPropertyOrder(CATEGORY_MAIN, menuItems);
@@ -129,11 +143,25 @@ public class SnitchcordConfig {
             tracklist.add(s.toLowerCase());
         }
 
+        ignoredGroupsOn = propignoredGroupsOn.getBoolean();
+        trackedGroupsOn = proptrackedGroupsOn.getBoolean();
+
+        String[] ignoredGroupsArr = propignoredGroups.getStringList();
+        ignoredGroups = new HashSet<>(ignoredGroupsArr.length);
+        for (String s : ignoredGroupsArr) {
+            ignoredGroups.add(s.toLowerCase());
+        }
+
+        String[] trackedGroupsArr = proptrackedGroups.getStringList();
+        trackedGroups = new HashSet<>(trackedGroupsArr.length);
+        for (String s : trackedGroupsArr) {
+            trackedGroups.add(s.toLowerCase());
+        }
+
         if (config.hasChanged()) {
             config.save();
             syncProperties();
             SnitchcordMod.logger.info("Saved " + SnitchcordMod.MOD_NAME + " config.");
         }
     }
-
 }
