@@ -2,6 +2,7 @@ package gjum.minecraft.forge.snitchcord;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.commons.lang3.text.WordUtils;
 import gjum.minecraft.forge.snitchcord.SnitchcordMod;
 import gjum.minecraft.forge.snitchcord.config.SnitchcordConfig;
 import gjum.minecraft.forge.snitchcord.FmtTemplateToken;
@@ -201,6 +202,15 @@ public class AlertSender {
 
         String dateFormat = "HH:mm:ss";
 
+        String shortSnitchType = null;
+        if (alert.snitchType != null) {
+            if (alert.snitchType.equals("logging")) {
+                shortSnitchType = "L";
+            } else {
+                shortSnitchType = "E";
+            }
+        }
+
         StringBuilder parsedFmt = new StringBuilder();
         for (FmtTemplateToken token : tokens) {
             if (token.type.equals("TEXT")) {
@@ -224,6 +234,19 @@ public class AlertSender {
                     break;
                 case "group":
                     parsedFmt.append(alert.group == null ? "" : token.contentPrefix + alert.group + token.contentPostfix);
+                    break;
+
+                case "type":
+                    parsedFmt.append(alert.snitchType == null ? "" : token.contentPrefix + WordUtils.capitalize(alert.snitchType) + token.contentPostfix);
+                    break;
+                case "nonEntry":
+                    parsedFmt.append(alert.snitchType == null || alert.snitchType.equals("entry") ? "" : token.contentPrefix + WordUtils.capitalize(alert.snitchType) + token.contentPostfix);
+                    break;
+                case "shortType":
+                    parsedFmt.append(alert.snitchType == null ? "" : token.contentPrefix + shortSnitchType + token.contentPostfix);
+                    break;
+                case "shortNonEntry":
+                    parsedFmt.append(alert.snitchType == null || alert.snitchType.equals("entry") ? "" : token.contentPrefix + shortSnitchType + token.contentPostfix);
                     break;
 
                 case "longAction":

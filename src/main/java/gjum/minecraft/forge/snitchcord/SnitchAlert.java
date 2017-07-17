@@ -36,15 +36,17 @@ public class SnitchAlert {
     public final Activity activity;
     public final String world;
     public final String group;
+    public final String snitchType;
     public final ITextComponent rawMessage;
 
-    public SnitchAlert(String playerName, int x, int y, int z, String activityText, String snitchName, String world, String group, ITextComponent rawMessage) {
+    public SnitchAlert(String playerName, int x, int y, int z, String activityText, String snitchName, String world, String group, String snitchType, ITextComponent rawMessage) {
         this.playerName = playerName;
         this.pos = new BlockPos(x, y, z);
         this.activityText = activityText;
         this.snitchName = snitchName;
         this.world = world;
         this.group = group;
+        this.snitchType = snitchType.toLowerCase();
         this.rawMessage = rawMessage;
 
         activity = Activity.fromMatch(activityText);
@@ -57,9 +59,11 @@ public class SnitchAlert {
         }
 
         String group;
+        String snitchType;
         HoverEvent hover = getHoverEvent(rawMessage);
         if (hover == null) {
             group = null;
+            snitchType = null;
             SnitchcordMod.logger.error(
                     "[SnitchCord] Error: No hover in snitch alert. The server needs JukeAlert >= v1.6.1.");
         } else {
@@ -67,10 +71,12 @@ public class SnitchAlert {
             Matcher hoverMatcher = snitchAlertHoverPattern.matcher(hoverText);
             if (!hoverMatcher.matches()) {
                 group = null;
+                snitchType = null;
                 SnitchcordMod.logger.error(
                         "[SnitchCord] Error: Snitch alert hover regex failed to match hover in snitch alert.");
             } else {
                 group = hoverMatcher.group(5);
+                snitchType = hoverMatcher.group(6);
             }
         }
 
@@ -81,7 +87,7 @@ public class SnitchAlert {
         int x = Integer.parseInt(matcher.group(5));
         int y = Integer.parseInt(matcher.group(6));
         int z = Integer.parseInt(matcher.group(7));
-        return new SnitchAlert(playerName, x, y, z, activity, snitchName, worldName, group, rawMessage);
+        return new SnitchAlert(playerName, x, y, z, activity, snitchName, worldName, group, snitchType, rawMessage);
     }
 
     private static String stripMinecraftFormattingCodes(String str) {
