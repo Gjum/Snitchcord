@@ -26,28 +26,28 @@ You can change it to something else if you know the format.
 
 All the `<...>` will be replaced by various alert information:
 
-| format key        | replacement examples       |
-|:------------------|:---------------------------|
-| \<time\>          | 05:23                      |
-| \<timeUTC\>       | 00:23                      |
-| \<player\>        | Gjum                       |
-| \<snitch\>        | MySnitch                   |
-| \<longAction\>    | entered snitch at \| ...   |
-| \<shortAction\>   | enter \| login \| logout   |
-| \<nonEnter\>      | login \| logout            |
-| \<enter\>         | enter                      |
-| \<login\>         | login                      |
-| \<logout\>        | logout                     |
-| \<world\>         | World \| Nether \| The End |
-| \<nonWorld\>      | Nether \| The End          |
-| \<coords\>        | -1234 56 -789              |
-| \<x\>             | -1234                      |
-| \<y\>             | 56                         |
-| \<z\>             | -789                       |
-| \<roundedCoords\> | -1230 60 -790              |
-| \<rx\>            | -1230                      |
-| \<ry\>            | 60                         |
-| \<rz\>            | -790                       |
+| format key        | replacement examples       | optional? |
+|:------------------|:---------------------------|:----------|
+| \<time\>          | 05:23                      |           |
+| \<timeUTC\>       | 00:23                      |           |
+| \<player\>        | Gjum                       |           |
+| \<snitch\>        | MySnitch                   |     ✔    |
+| \<longAction\>    | entered snitch at \| ...   |           |
+| \<shortAction\>   | Enter \| Login \| Logout   |           |
+| \<nonEnter\>      | Login \| Logout            |     ✔    |
+| \<enter\>         | Enter                      |     ✔    |
+| \<login\>         | Login                      |     ✔    |
+| \<logout\>        | Logout                     |     ✔    |
+| \<world\>         | World \| Nether \| The End |           |
+| \<nonWorld\>      | Nether \| The End          |     ✔    |
+| \<coords\>        | -1234 56 -789              |           |
+| \<x\>             | -1234                      |           |
+| \<y\>             | 56                         |           |
+| \<z\>             | -789                       |           |
+| \<roundedCoords\> | -1230 60 -790              |           |
+| \<rx\>            | -1230                      |           |
+| \<ry\>            | 60                         |           |
+| \<rz\>            | -790                       |           |
 
 Standard world names are replaced with their friendlier variants (see table).
 
@@ -55,13 +55,13 @@ You can put colons around optional format keys (`nonEnter`, `nonWorld`, etc.) th
 
 For example, upon a snitch entry event, the output for alert format
 
-`{"content":"<player> **<nonEnter>** at <snitch>"}`
+`{"content":"<player> @<nonEnter>@ at <snitch>"}`
 
-would be `PLAYER ** at SNITCHNAME`, which probably isn't what you want.
+would be `PLAYER @@ at SNITCHNAME`, which probably isn't what you want.
 
 Instead, you can do
 
-`{"content":"<player> <**:nonEnter:**> at <snitch>"}`
+`{"content":"<player>< @:nonEnter:@> at <snitch>"}`
 
 which would result in `PLAYER at SNITCHNAME`.
 
