@@ -46,7 +46,7 @@ public class SnitchAlert {
     }
 
     public static SnitchAlert fromChat(ITextComponent chatTextComponent) {
-        Matcher matcher = snitchAlertPattern.matcher(chatTextComponent.getUnformattedText());
+        Matcher matcher = snitchAlertPattern.matcher(stripMinecraftFormattingCodes(chatTextComponent.getUnformattedText()));
         if (!matcher.matches()) {
             return null;
         }
@@ -61,4 +61,7 @@ public class SnitchAlert {
         return new SnitchAlert(playerName, x, y, z, activity, snitchName, worldName, chatTextComponent);
     }
 
+    private static String stripMinecraftFormattingCodes(String str) {
+        return str.replaceAll("(?i)\\u00A7[a-z0-9]", "");
+    }
 }
