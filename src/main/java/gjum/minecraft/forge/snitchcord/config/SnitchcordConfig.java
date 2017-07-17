@@ -5,6 +5,9 @@ import gjum.minecraft.forge.snitchcord.SnitchcordMod;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.client.Minecraft;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -112,12 +115,18 @@ public class SnitchcordConfig {
         alertFormat = propAlertFormat.getString();
         webhookUrl = propWebhookUrl.getString();
 
+        Minecraft mc = Minecraft.getMinecraft();
+
         try {
             alertIgnoreFilter = null;
             if (propAlertIgnoreFilter.getString().length() > 0)
                 alertIgnoreFilter = Pattern.compile(propAlertIgnoreFilter.getString());
         } catch (PatternSyntaxException e) {
-            SnitchcordMod.logger.error("Error in filter for ignored alerts: " + e.getMessage());
+            String msg = String.format("[SnitchCord] Error: incorrect regex in filter for ignored alerts: %s", e.getMessage());
+            if (mc != null && mc.ingameGUI != null && mc.ingameGUI.getChatGUI() != null) {
+                mc.ingameGUI.getChatGUI().printChatMessage(new TextComponentString(msg));
+            }
+            SnitchcordMod.logger.error(msg);
         }
 
         try {
@@ -125,7 +134,11 @@ public class SnitchcordConfig {
             if (propAlertTrackFilter.getString().length() > 0)
                 alertTrackFilter = Pattern.compile(propAlertTrackFilter.getString());
         } catch (PatternSyntaxException e) {
-            SnitchcordMod.logger.error("Error in filter for tracked alerts: " + e.getMessage());
+            String msg = String.format("[SnitchCord] Error: incorrect regex in filter for tracked alerts: %s", e.getMessage());
+            if (mc != null && mc.ingameGUI != null && mc.ingameGUI.getChatGUI() != null) {
+                mc.ingameGUI.getChatGUI().printChatMessage(new TextComponentString(msg));
+            }
+            SnitchcordMod.logger.error(msg);
         }
 
         ignorelistOn = propIgnorelistOn.getBoolean();

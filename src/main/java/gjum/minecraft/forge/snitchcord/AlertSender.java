@@ -6,7 +6,9 @@ import org.apache.commons.lang3.text.WordUtils;
 import gjum.minecraft.forge.snitchcord.SnitchcordMod;
 import gjum.minecraft.forge.snitchcord.config.SnitchcordConfig;
 import gjum.minecraft.forge.snitchcord.FmtTemplateToken;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.Minecraft;
 
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
@@ -172,14 +174,18 @@ public class AlertSender {
                 token.contentPostfix = texts.get(2);
                 tokens.add(token);
             } else if (texts.size() == 2) {
-                SnitchcordMod.logger.error(String.format(
+                String msg = String.format(
                         "[SnitchCord] Error: Incorrect alert format: Too few prefix/postfix separators in format key <%s>. " +
-                        "You must use two, e.g. '<prefix:key:postfix>'.", token.content));
+                        "You must use two, e.g. '<prefix:key:postfix>'.", token.content);
+                Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new TextComponentString(msg));
+                SnitchcordMod.logger.error(msg);
                 throw new Exception();
             } else {
-                SnitchcordMod.logger.error(String.format(
+                String msg = String.format(
                         "[SnitchCord] Error: Incorrect alert format: Too many prefix/postfix separators in format key <%s>. " +
-                        "If you'd like to use a regular ':' in a format key, type '::'.", token.content));
+                        "If you'd like to use a regular ':' in a format key, type '::'.", token.content);
+                Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new TextComponentString(msg));
+                SnitchcordMod.logger.error(msg);
                 throw new Exception();
             }
         }
@@ -301,8 +307,10 @@ public class AlertSender {
                     parsedFmt.append(String.valueOf(rPos.getZ()));
                     break;
                 default:
-                    SnitchcordMod.logger.error(String.format(
-                            "[SnitchCord] Error: Incorrect alert format: Unrecognized format key <%s>. ", token.content));
+                    String msg = String.format(
+                            "[SnitchCord] Error: Incorrect alert format: Unrecognized format key <%s>. ", token.content);
+                    Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new TextComponentString(msg));
+                    SnitchcordMod.logger.error(msg);
                     throw new Exception();
             }
         }
