@@ -46,7 +46,7 @@ public class SnitchAlert {
         this.snitchName = snitchName;
         this.world = world;
         this.group = group;
-        this.snitchType = snitchType.toLowerCase();
+        this.snitchType = snitchType == null ? null : snitchType.toLowerCase();
         this.rawMessage = rawMessage;
 
         activity = Activity.fromMatch(activityText);
